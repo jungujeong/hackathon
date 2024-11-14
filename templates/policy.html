@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9faf5;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2e7d32 0%, #388e3c 50%, #1b5e20 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%);
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+        }
+
+        .site-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: inline-block;
+            margin-right: 30px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-item.active {
+            color: #2e7d32;
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #4caf50, #2e7d32);
+            border-radius: 2px;
+        }
+
+        .nav-item:hover {
+            color: #2e7d32;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .policy-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .policy-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .policy-content {
+            flex: 1;
+        }
+
+        .policy-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #1b5e20;
+        }
+
+        .policy-info {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .policy-summary {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .progress-small {
+            width: 200px;
+            height: 6px;
+            background-color: #e8f5e9;
+            border-radius: 3px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #4caf50, #2e7d32);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .participate-button {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-left: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .participate-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(46, 125, 50, 0.2);
+        }
+
+        .reward-points {
+            color: #2e7d32;
+            font-weight: 500;
+            font-size: 14px;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .reward-points::before {
+            content: '🌱';
+            font-size: 16px;
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            z-index: 200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-button {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 투표함 -->
+                    <rect x="35" y="45" width="30" height="35" fill="none" stroke="white" stroke-width="3" rx="4" />
+                    <rect x="42" y="40" width="16" height="8" fill="none" stroke="white" stroke-width="3" />
+
+                    <!-- 손 -->
+                    <path
+                        d="M75 55 C80 50 83 60 80 65 L75 70 L70 73 L65 75 L60 73 L57 70 C55 67 53 60 57 57 C60 55 63 57 65 60 C67 57 70 55 73 57"
+                        fill="white" />
+
+                    <!-- 나뭇잎 모양 투표용지 -->
+                    <path d="M25 45 L35 45 
+                   Q30 35 35 25
+                   Q40 35 35 45
+                   L25 45" fill="white" transform="rotate(-15, 30, 35)" />
+                </svg>
+                <h1 class="site-title">Green Vote</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-content">
+            <a href="#" class="nav-item">뉴스</a>
+            <a href="#" class="nav-item active">정책</a>
+            <a href="#" class="nav-item">이슈</a>
+            <a href="#" class="nav-item">에코 리워드</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="policy-card">
+            <div class="policy-content">
+                <div class="policy-title">3대 녹색 신산업 키우고, 100조 수출한다</div>
+                <div class="policy-info">진행기간: 2023 ~ 2027 | 참여자: 15,842명</div>
+                <div class="policy-summary">
+                    국내 녹색산업은 탄소중립, 순환경제, 물 산업 등 신산업으로 확장하여 2023년까지 20조 원, 2027년까지 100조 원 수출을 목표로 합니다. 중동과 중앙·동남아시아에 맞춤형
+                    전략을 통해 그린수소, 해수 담수화,
+                    상하수도 분야 수출을 확대하고, 향후 북미·유럽 시장까지 진출할 계획입니다.
+                </div>
+                <div class="progress-small">
+                    <div class="progress-fill" style="width: 45%"></div>
+                </div>
+                <div class="reward-points">참여 시 300 그린포인트 적립</div>
+            </div>
+            <button class="participate-button" onclick="participate()">참여하기</button>
+        </div>
+
+        <div class="policy-card">
+            <div class="policy-content">
+                <div class="policy-title">시멘트, 화력발전 등 초미세먼지 배출 업종 배출 기준 강화</div>
+                <div class="policy-info"> 참여자: 23,651명</div>
+                <div class="policy-summary">
+                    초미세먼지 농도 30% 감축을 위해, 2022년 최저치(17.5㎍/㎥) 달성을 바탕으로 본격적인 감축을 추진합니다. 시멘트·화력발전 등 배출 업종의 기준을 강화하고, 시설 설치비
+                    지원을 병행하며, 무공해
+                    전기·수소차를 70만 대 보급(임기 내 200만 대)하고 노후 경유차 폐차 지원을 4등급까지 확대합니다.
+                </div>
+                <div class="progress-small">
+                    <div class="progress-fill" style="width: 65%"></div>
+                </div>
+                <div class="reward-points">참여 시 250 그린포인트 적립</div>
+            </div>
+            <button class="participate-button" onclick="participate()">참여하기</button>
+        </div>
+
+        <div class="policy-card">
+            <div class="policy-content">
+                <div class="policy-title">폐기물 및 자원순환</div>
+                <div class="policy-info">진행기간: 2025 ~ 2030 | 참여자: 31,245명</div>
+                <div class="policy-summary">
+                    의회는 2025년부터 섬유 폐기물 분리수거를 의무화하고, 2030년까지 음식물 폐기물을 가공·제조 분야에서 20%, 서비스·가정 분야에서 40% 감축을 목표로 합니다. 또한,
+                    경제적으로 덜 발달한 비OECD
+                    국가로의 폐기물 수출을 엄격히 규제할 예정입니다.
+                </div>
+                <div class="progress-small">
+                    <div class="progress-fill" style="width: 78%"></div>
+                </div>
+                <div class="reward-points">참여 시 400 그린포인트 적립</div>
+            </div>
+            <button class="participate-button" onclick="participate()">참여하기</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="participationModal" class="modal">
+        <div class="modal-content">
+            <p>참여해주셔서 감사합니다! 300 그린포인트가 적립되었습니다.</p>
+            <button class="close-button" onclick="closeModal()">닫기</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to open modal when "참여하기" is clicked
+        function participate() {
+            document.getElementById("participationModal").style.display = "block";
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById("participationModal").style.display = "none";
+        }
+    </script>
+</body>
+
+</html>

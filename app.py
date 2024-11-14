@@ -8,7 +8,7 @@ app.secret_key = 'your_secret_key'  # 세션에 필요한 비밀 키 설정
 db_config = {
     'host': 'localhost',
     'user': 'root',
-    'password': '1234',
+    'password': '0111',
     'database': 'hackathon'
 }
 
