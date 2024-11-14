@@ -1,7 +1,7 @@
 #선 실행 명령어
 
 - pip install requests
--
+- pip install flask mysql-connector-python
 
 #My SQL DB 생성
 
