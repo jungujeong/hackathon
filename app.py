@@ -80,12 +80,116 @@ def signup():
     return render_template('register.html')
 
 # 메인 페이지 라우팅 (로그인 성공 시 이동)
-@app.route('/main')
+@app.route('/main', methods=['GET', 'POST'])
 def main():
-    if 'user_id' in session:
-        return render_template('main.html', username=session['username'])
-    else:
+    if 'user_id' not in session:
         return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        try:
+            # 데이터베이스 연결
+            conn = mysql.connector.connect(**db_config)
+            cursor = conn.cursor()
+
+            # 현재 로그인한 사용자의 포인트 업데이트 (참여 시 포인트 증가)
+            user_id = session['user_id']
+            cursor.execute("UPDATE users SET points = points + 250 WHERE user_id = %s", (user_id,))
+            conn.commit()
+
+        except mysql.connector.Error as err:
+            print("Error: ", err)
+            return "Database connection error"
+
+        finally:
+            cursor.close()
+            conn.close()
+
+    try:
+        # 데이터베이스 연결
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor(dictionary=True)
+
+        # 현재 로그인한 사용자의 포인트 조회
+        user_id = session['user_id']
+        cursor.execute("SELECT points FROM users WHERE user_id = %s", (user_id,))
+        user = cursor.fetchone()
+
+        if user:
+            points = user['points']
+        else:
+            points = 0  # 사용자를 찾을 수 없을 경우 기본값 설정
+
+    except mysql.connector.Error as err:
+        print("Error: ", err)
+        return "Database connection error"
+
+    finally:
+        cursor.close()
+        conn.close()
+
+    # main.html 렌더링 시 username과 points를 전달
+    return render_template('main.html', username=session['username'], points=points)
+
+@app.route('/store', methods=['GET', 'POST'])
+def store():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        item_cost = int(request.form['item_cost'])
+        try:
+            # 데이터베이스 연결
+            conn = mysql.connector.connect(**db_config)
+            cursor = conn.cursor()
+
+            # 현재 로그인한 사용자의 포인트 조회 및 사용 처리
+            user_id = session['user_id']
+            cursor.execute("SELECT points FROM users WHERE user_id = %s", (user_id,))
+            user = cursor.fetchone()
+
+            if user and user[0] >= item_cost:
+                cursor.execute("UPDATE users SET points = points - %s WHERE user_id = %s", (item_cost, user_id))
+                conn.commit()
+                message = "교환이 완료되었습니다!"
+            else:
+                message = "포인트가 부족합니다."
+
+        except mysql.connector.Error as err:
+            print("Error: ", err)
+            return "Database connection error"
+
+        finally:
+            cursor.close()
+            conn.close()
+
+        return render_template('store.html', username=session['username'], points=user[0] - item_cost if user and user[0] >= item_cost else user[0], message=message)
+
+    try:
+        # 데이터베이스 연결
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor(dictionary=True)
+
+        # 현재 로그인한 사용자의 포인트 조회
+        user_id = session['user_id']
+        cursor.execute("SELECT points FROM users WHERE user_id = %s", (user_id,))
+        user = cursor.fetchone()
+
+        if user:
+            points = user['points']
+        else:
+            points = 0  # 사용자를 찾을 수 없을 경우 기본값 설정
+
+    except mysql.connector.Error as err:
+        print("Error: ", err)
+        return "Database connection error"
+
+    finally:
+        cursor.close()
+        conn.close()
+
+    # store.html 렌더링 시 username과 points를 전달
+    return render_template('store.html', username=session['username'], points=points)
 
 if __name__ == '__main__':
     app.run(debug=True)
+
