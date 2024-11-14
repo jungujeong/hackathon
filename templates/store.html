@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Green Vote Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        body {
+            background-color: #f9faf5;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2e7d32 0%, #388e3c 50%, #1b5e20 100%);
+            color: white;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%);
+        }
+
+        .header h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .points-banner {
+            background: linear-gradient(to right, #4caf50, #2e7d32);
+            color: white;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .points-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .points-display {
+            font-size: 18px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .points-display::before {
+            content: '🌱';
+            font-size: 24px;
+        }
+
+        .store-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .category-title {
+            color: #1b5e20;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4caf50;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: #e8f5e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 80%;
+            height: 80%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1b5e20;
+            margin-bottom: 8px;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .product-price {
+            color: #2e7d32;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .product-price::before {
+            content: '🌱';
+            font-size: 16px;
+        }
+
+        .exchange-button {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .exchange-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(46, 125, 50, 0.2);
+        }
+
+        .exchange-button:disabled {
+            background: #9e9e9e;
+            cursor: not-allowed;
+        }
+
+        .success-popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateX(200%);
+            transition: transform 0.3s ease-out;
+            z-index: 1000;
+        }
+
+        .success-popup.show {
+            transform: translateX(0);
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Green Vote store</h1>
+    </div>
+
+    <div class="points-banner">
+        <div class="points-content">
+            <div class="points-display">
+                현재 포인트: <span id="points">500</span>
+            </div>
+            <div id="points-update" style="opacity: 0; transition: opacity 0.3s;">포인트가 업데이트되었습니다!</div>
+        </div>
+    </div>
+
+    <div class="store-container">
+        <h2 class="category-title">인기 상품</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img
+                        src="https://imagecdn.dpon.gift/images/merchandises/%E1%84%89%E1%85%B3%E1%84%90%E1%85%A1%E1%84%87%E1%85%A5%E1%86%A8%E1%84%89%E1%85%B3_%E1%84%89%E1%85%A1%E1%86%BC%E1%84%91%E1%85%AE%E1%86%B7%E1%84%80%E1%85%AF%E1%86%AB3%E1%84%86%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%8F%E1%85%A1%E1%84%83%E1%85%B3_3.jpg">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">스타벅스 5000원권</h3>
+                    <p class="product-description"></p>
+                    <div class="product-price">300 포인트</div>
+                    <button class="exchange-button" onclick="exchange(this, 300)">교환하기</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://imagecdn.dpon.gift/images/merchandises/%E1%84%89%E1%85%B3%E1%84%90%E1%85%A1%E1%84%87%E1%85%A5%E1%86%A8%E1%84%89%E1%85%B3_%E1%84%89%E1%85%A1%E1%86%BC%E1%84%91%E1%85%AE%E1%86%B7%E1%84%80%E1%85%AF%E1%86%AB3%E1%84%86%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%8F%E1%85%A1%E1%84%83%E1%85%B3_3.jpg"
+                        alt="Reusable Bottle">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">스타벅스 10000원권</h3>
+                    <p class="product-description"></p>
+                    <div class="product-price">300 포인트</div>
+                    <button class="exchange-button" onclick="exchange(this, 300)">교환하기</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img
+                        src="https://image.istarbucks.co.kr/upload/store/skuimg/2023/03/[9300000004398]_20230329141438662.jpg">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">스타벅스 텀블러</h3>
+                    <p class="product-description"></p>
+                    <div class="product-price">300 포인트</div>
+                    <button class="exchange-button" onclick="exchange(this, 300)">교환하기</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://www.intermarket.co.kr/data/goods/63a6c8b109f7e.jpg">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">리사이클 에코백</h3>
+                    <p class="product-description"></p>
+                    <div class="product-price">300 포인트</div>
+                    <button class="exchange-button" onclick="exchange(this, 300)">교환하기</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://www.seoulfn.com/news/photo/202202/447955_216435_2851.jpg" alt="Eco Bag">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">비건 화장품 2000원 할인권</h3>
+                    <p class="product-description"></p>
+                    <div class="product-price">200 포인트</div>
+                    <button class="exchange-button" onclick="exchange(this, 200)">교환하기</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="successPopup" class="success-popup">교환이 완료되었습니다!</div>
+
+    <script>
+        let userPoints = 500;
+        const pointsElement = document.getElementById('points');
+        const pointsUpdate = document.getElementById('points-update');
+        const successPopup = document.getElementById('successPopup');
+
+        function showPopup() {
+            successPopup.classList.add('show');
+            setTimeout(() => {
+                successPopup.classList.remove('show');
+            }, 3000);
+        }
+
+        function updatePoints(newPoints) {
+            pointsElement.textContent = newPoints;
+            pointsUpdate.style.opacity = '1';
+            setTimeout(() => {
+                pointsUpdate.style.opacity = '0';
+            }, 2000);
+        }
+
+        function exchange(button, cost) {
+            if (userPoints >= cost) {
+                button.classList.add('shake');
+                setTimeout(() => {
+                    button.classList.remove('shake');
+                }, 500);
+
+                userPoints -= cost;
+                updatePoints(userPoints);
+                showPopup();
+
+                // 포인트가 부족한 상품의 버튼 비활성화
+                document.querySelectorAll('.exchange-button').forEach(btn => {
+                    const price = parseInt(btn.previousElementSibling.textContent);
+                    btn.disabled = userPoints < price;
+                });
+            } else {
+                button.classList.add('shake');
+                setTimeout(() => {
+                    button.classList.remove('shake');
+                }, 500);
+            }
+        }
+
+        // 초기 버튼 상태 설정
+        document.querySelectorAll('.exchange-button').forEach(btn => {
+            const price = parseInt(btn.previousElementSibling.textContent);
+            btn.disabled = userPoints < price;
+        });
+    </script>
+</body>
+
+</html>
