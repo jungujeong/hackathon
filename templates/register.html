@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9faf5;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2e7d32 0%, #388e3c 50%, #1b5e20 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%);
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+        }
+
+        .site-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: inline-block;
+            margin-right: 30px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-item.active {
+            color: #2e7d32;
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #4caf50, #2e7d32);
+            border-radius: 2px;
+        }
+
+        .nav-item:hover {
+            color: #2e7d32;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .signup-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            margin: 50px auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .login-link {
+            margin-top: 15px;
+            display: block;
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 투표함 -->
+                    <rect x="35" y="45" width="30" height="35" fill="none" stroke="white" stroke-width="3" rx="4" />
+                    <rect x="42" y="40" width="16" height="8" fill="none" stroke="white" stroke-width="3" />
+
+                    <!-- 손 -->
+                    <path d="M75 55 C80 50 83 60 80 65 L75 70 L70 73 L65 75 L60 73 L57 70 C55 67 53 60 57 57 C60 55 63 57 65 60 C67 57 70 55 73 57" fill="white" />
+
+                    <!-- 나뭇잎 모양 투표용지 -->
+                    <path d="M25 45 L35 45 
+                   Q30 35 35 25
+                   Q40 35 35 45
+                   L25 45" fill="white" transform="rotate(-15, 30, 35)" />
+                </svg>
+                <h1 class="site-title">Green Vote</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-content">
+            <a href="#" class="nav-item active">회원가입</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="signup-container">
+            <h2>회원가입</h2>
+            <form action="/signup" method="post">
+                <div class="form-group">
+                    <label for="username">아이디:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">이름:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">비밀번호:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="country">국적:</label>
+                    <select id="country" name="country" required>
+                        <option value="">국가를 선택하세요</option>
+                        <option value="KR">대한민국</option>
+                        <option value="US">미국</option>
+                        <option value="JP">일본</option>
+                        <option value="CN">중국</option>
+                        <option value="UK">영국</option>
+                        <option value="FR">프랑스</option>
+                        <option value="DE">독일</option>
+                        <option value="IN">인도</option>
+                        <option value="CA">캐나다</option>
+                        <option value="AU">호주</option>
+                        <option value="BR">브라질</option>
+                        <option value="MX">멕시코</option>
+                        <option value="RU">러시아</option>
+                        <option value="IT">이탈리아</option>
+                        <option value="ES">스페인</option>
+                        <!-- Add more countries as needed -->
+                    </select>
+                </div>
+                <button type="submit">회원가입</button>
+                <a href="/login" class="login-link">로그인</a>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
