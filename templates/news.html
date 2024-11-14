@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9faf5;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2e7d32 0%, #388e3c 50%, #1b5e20 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+        }
+
+        .site-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: inline-block;
+            margin-right: 30px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-item.active {
+            color: #2e7d32;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .news-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .news-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1b5e20;
+            margin-bottom: 10px;
+        }
+
+        .news-info {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .news-summary {
+            color: #333;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- SVG content here -->
+            </svg>
+            <h1 class="site-title">Green Vote</h1>
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-content">
+            <a href="news.html" class="nav-item active">뉴스</a>
+            <a href="policy.html" class="nav-item">정책</a>
+            <a href="rewards.html" class="nav-item">에코 리워드</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="news-card" onclick="window.location.href='news-details.html';">
+            <div class="news-title">환경을 위한 새로운 기술 개발</div>
+            <div class="news-info">2024.11.15 | 출처: 환경 뉴스</div>
+            <div class="news-summary">
+                환경 보호와 지속 가능한 미래를 위해 새로운 기술이 개발되고 있습니다. 이 기술은...
+            </div>
+        </div>
+
+        <div class="news-card" onclick="window.location.href='news-details.html';">
+            <div class="news-title">태양광 패널 설치 확대 방안</div>
+            <div class="news-info">2024.11.10 | 출처: 그린에너지 저널</div>
+            <div class="news-summary">
+                공공 기관과 민간 부문에서의 태양광 패널 설치가 확대되면서 그 효과에 대한 논의가...
+            </div>
+        </div>
+
+        <div class="news-card" onclick="window.location.href='news-details.html';">
+            <div class="news-title">재활용 캠페인 성공 사례</div>
+            <div class="news-info">2024.11.05 | 출처: 자원 순환 뉴스</div>
+            <div class="news-summary">
+                재활용 캠페인의 성공적인 사례가 주목받고 있습니다. 이번 캠페인은...
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

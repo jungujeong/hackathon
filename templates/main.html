@@ -2,6 +2,9 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <title>Green Vote</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 
@@ -36,6 +39,7 @@
             margin: 0 auto;
             display: flex;
             align-items: center;
+            justify-content: space-between; /* 아이템들을 좌우로 정렬 */
             gap: 15px;
         }
 
@@ -225,40 +229,81 @@
             border-radius: 6px;
             cursor: pointer;
         }
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* 아이템들을 좌우로 정렬 */
+            gap: 15px;
+        }
+        
+
+
+       .username-container {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: #2e7d32; /* 초록 배경 */
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+        .user-info-container {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* 포인트와 사용자 이름 간의 간격 */
+        }
+        .points-display {
+            font-size: 18px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .points-display::before {
+            content: '🌱';
+            font-size: 24px;
+        }
     </style>
 </head>
 
 <body>
     <div class="header">
         <div class="header-content">
-            <div class="logo-container">{{username}}
+            <div class="logo-container">
                 <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <!-- 투표함 -->
                     <rect x="35" y="45" width="30" height="35" fill="none" stroke="white" stroke-width="3" rx="4" />
                     <rect x="42" y="40" width="16" height="8" fill="none" stroke="white" stroke-width="3" />
-
+    
                     <!-- 손 -->
                     <path
                         d="M75 55 C80 50 83 60 80 65 L75 70 L70 73 L65 75 L60 73 L57 70 C55 67 53 60 57 57 C60 55 63 57 65 60 C67 57 70 55 73 57"
                         fill="white" />
-
+    
                     <!-- 나뭇잎 모양 투표용지 -->
                     <path d="M25 45 L35 45 
-                   Q30 35 35 25
-                   Q40 35 35 45
-                   L25 45" fill="white" transform="rotate(-15, 30, 35)" />
+                       Q30 35 35 25
+                       Q40 35 35 45
+                       L25 45" fill="white" transform="rotate(-15, 30, 35)" />
                 </svg>
                 <h1 class="site-title">Green Vote</h1>
+            </div>
+            <div class="user-info-container">
+                <div class="points-display">
+                    현재 포인트: {{ points }}
+                </div>
+            <div class="username-container">{{username}}</div>
             </div>
         </div>
     </div>
 
     <div class="nav">
         <div class="nav-content">
-            <a href="#" class="nav-item">뉴스</a>
-            <a href="#" class="nav-item active">정책</a>
-            <a href="#" class="nav-item">이슈</a>
-            <a href="#" class="nav-item">에코 리워드</a>
+            <a href="#news.html" class="nav-item" onclick="activateNavItem(this)">뉴스</a>
+            <a href="{{ url_for('main') }}" class="nav-item" onclick="activateNavItem(this)">정책</a>
+            <a href="#" class="nav-item" onclick="activateNavItem(this)">이슈</a>
+            <a href="{{ url_for('store') }}" class="nav-item" onclick="activateNavItem(this)">에코 리워드</a>
         </div>
     </div>
 
@@ -273,9 +318,11 @@
                 <div class="progress-small">
                     <div class="progress-fill" style="width: 45%"></div>
                 </div>
-                <div class="reward-points">참여 시 300 그린포인트 적립</div>
+                <div class="reward-points">참여 시 250 그린포인트 적립</div>
             </div>
-            <button class="participate-button" onclick="participate()">참여하기</button>
+            <form method="post">
+                <button type="submit" class="participate-button">참여하기</button>
+            </form>
         </div>
 
         <div class="policy-card">
@@ -290,7 +337,9 @@
                 </div>
                 <div class="reward-points">참여 시 250 그린포인트 적립</div>
             </div>
-            <button class="participate-button" onclick="participate()">참여하기</button>
+            <form method="post">
+                <button type="submit" class="participate-button">참여하기</button>
+            </form>
         </div>
 
         <div class="policy-card">
@@ -303,9 +352,11 @@
                 <div class="progress-small">
                     <div class="progress-fill" style="width: 78%"></div>
                 </div>
-                <div class="reward-points">참여 시 400 그린포인트 적립</div>
+                <div class="reward-points">참여 시 250 그린포인트 적립</div>
             </div>
-            <button class="participate-button" onclick="participate()">참여하기</button>
+            <form method="post">
+                <button type="submit" class="participate-button">참여하기</button>
+            </form>
         </div>
     </div>
 
@@ -327,7 +378,17 @@
         function closeModal() {
             document.getElementById("participationModal").style.display = "none";
         }
+
+        function activateNavItem(element) {
+            // 모든 nav-item의 active 클래스를 제거합니다.
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+    
+            // 현재 클릭한 항목에 active 클래스를 추가합니다.
+            element.classList.add('active');
+        }
     </script>
 </body>
 
 </html>
+

@@ -14,13 +14,17 @@
         }
 
         body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
             background-color: #f9faf5;
         }
 
         .header {
             background: linear-gradient(135deg, #2e7d32 0%, #388e3c 50%, #1b5e20 100%);
             color: white;
-            padding: 40px 20px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
             position: relative;
             overflow: hidden;
         }
@@ -35,24 +39,33 @@
             background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%);
         }
 
-        .header h1 {
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* 아이템들을 좌우로 정렬 */
+            gap: 15px;
+        }
+        
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+        }
+
+        .site-title {
             font-family: 'Dancing Script', cursive;
             font-size: 32px;
             font-weight: 700;
             margin: 0;
-            text-align: center;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-
-        .points-banner {
-            background: linear-gradient(to right, #4caf50, #2e7d32);
-            color: white;
-            padding: 15px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .points-content {
@@ -70,7 +83,7 @@
             align-items: center;
             gap: 8px;
         }
-
+        
         .points-display::before {
             content: '🌱';
             font-size: 24px;
@@ -222,20 +235,116 @@
         .shake {
             animation: shake 0.5s ease-in-out;
         }
+        .return-home {
+            margin-left: 10px;
+            font-size: 14px;
+            text-decoration: none;
+            color: #2e7d32;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .return-home:hover {
+            color: #388e3c;
+        }
+
+        .nav {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: inline-block;
+            margin-right: 30px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-item.active {
+            color: #2e7d32;
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #4caf50, #2e7d32);
+            border-radius: 2px;
+        }
+
+        .nav-item:hover {
+            color: #2e7d32;
+        }
+        
+
+        .user-info-container {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* 포인트와 사용자 이름 간의 간격 */
+        }
+        
+        .username-container {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: #2e7d32; /* 초록 배경 */
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
     </style>
 </head>
 
 <body>
     <div class="header">
-        <h1>Green Vote store</h1>
-    </div>
-
-    <div class="points-banner">
-        <div class="points-content">
-            <div class="points-display">
-                현재 포인트: <span id="points">500</span>
+        <div class="header-content">
+            <div class="logo-container">
+                <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 투표함 -->
+                    <rect x="35" y="45" width="30" height="35" fill="none" stroke="white" stroke-width="3" rx="4" />
+                    <rect x="42" y="40" width="16" height="8" fill="none" stroke="white" stroke-width="3" />
+    
+                    <!-- 손 -->
+                    <path
+                        d="M75 55 C80 50 83 60 80 65 L75 70 L70 73 L65 75 L60 73 L57 70 C55 67 53 60 57 57 C60 55 63 57 65 60 C67 57 70 55 73 57"
+                        fill="white" />
+    
+                    <!-- 나뭇잎 모양 투표용지 -->
+                    <path d="M25 45 L35 45 
+                       Q30 35 35 25
+                       Q40 35 35 45
+                       L25 45" fill="white" transform="rotate(-15, 30, 35)" />
+                </svg>
+                <h1 class="site-title">Green Vote Store</h1>
             </div>
-            <div id="points-update" style="opacity: 0; transition: opacity 0.3s;">포인트가 업데이트되었습니다!</div>
+            <div class="user-info-container">
+                <div class="points-display">
+                    현재 포인트: {{ points }}
+                </div>
+                <div class="username-container">{{username}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="nav">
+        <div class="nav-content">
+            <a href="#news.html" class="nav-item" onclick="activateNavItem(this)">뉴스</a>
+            <a href="{{ url_for('main') }}" class="nav-item" onclick="activateNavItem(this)">정책</a>
+            <a href="#" class="nav-item" onclick="activateNavItem(this)">이슈</a>
+            <a href="{{ url_for('store') }}" class="nav-item" onclick="activateNavItem(this)">에코 리워드</a>
         </div>
     </div>
 
@@ -244,123 +353,139 @@
         <div class="products-grid">
             <div class="product-card">
                 <div class="product-image">
-                    <img
-                        src="https://imagecdn.dpon.gift/images/merchandises/%E1%84%89%E1%85%B3%E1%84%90%E1%85%A1%E1%84%87%E1%85%A5%E1%86%A8%E1%84%89%E1%85%B3_%E1%84%89%E1%85%A1%E1%86%BC%E1%84%91%E1%85%AE%E1%86%B7%E1%84%80%E1%85%AF%E1%86%AB3%E1%84%86%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%8F%E1%85%A1%E1%84%83%E1%85%B3_3.jpg">
+                    <img src="https://imagecdn.dpon.gift/images/merchandises/스타벅스_상풍권3만원권_3.jpg">
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">스타벅스 5000원권</h3>
-                    <p class="product-description"></p>
                     <div class="product-price">300 포인트</div>
-                    <button class="exchange-button" onclick="exchange(this, 300)">교환하기</button>
+                    <form method="post">
+                        <input type="hidden" name="item_cost" value="300">
+                        <button type="submit" class="exchange-button">교환하기</button>
+                    </form>
                 </div>
             </div>
-
+    
             <div class="product-card">
                 <div class="product-image">
-                    <img src="https://imagecdn.dpon.gift/images/merchandises/%E1%84%89%E1%85%B3%E1%84%90%E1%85%A1%E1%84%87%E1%85%A5%E1%86%A8%E1%84%89%E1%85%B3_%E1%84%89%E1%85%A1%E1%86%BC%E1%84%91%E1%85%AE%E1%86%B7%E1%84%80%E1%85%AF%E1%86%AB3%E1%84%86%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%8F%E1%85%A1%E1%84%83%E1%85%B3_3.jpg"
-                        alt="Reusable Bottle">
+                    <img src="https://imagecdn.dpon.gift/images/merchandises/스타벅스_상풍권10만원권_3.jpg" alt="Reusable Bottle">
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">스타벅스 10000원권</h3>
-                    <p class="product-description"></p>
-                    <div class="product-price">300 포인트</div>
-                    <button class="exchange-button" onclick="exchange(this, 300)">교환하기</button>
+                    <div class="product-price">600 포인트</div>
+                    <form method="post">
+                        <input type="hidden" name="item_cost" value="600">
+                        <button type="submit" class="exchange-button">교환하기</button>
+                    </form>
                 </div>
             </div>
-
+    
             <div class="product-card">
                 <div class="product-image">
-                    <img
-                        src="https://image.istarbucks.co.kr/upload/store/skuimg/2023/03/[9300000004398]_20230329141438662.jpg">
+                    <img src="https://image.istarbucks.co.kr/upload/store/skuimg/2023/03/[9300000004398]_20230329141438662.jpg">
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">스타벅스 텀블러</h3>
-                    <p class="product-description"></p>
-                    <div class="product-price">300 포인트</div>
-                    <button class="exchange-button" onclick="exchange(this, 300)">교환하기</button>
+                    <div class="product-price">900 포인트</div>
+                    <form method="post">
+                        <input type="hidden" name="item_cost" value="900">
+                        <button type="submit" class="exchange-button">교환하기</button>
+                    </form>
                 </div>
             </div>
-
+    
             <div class="product-card">
                 <div class="product-image">
                     <img src="https://www.intermarket.co.kr/data/goods/63a6c8b109f7e.jpg">
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">리사이클 에코백</h3>
-                    <p class="product-description"></p>
-                    <div class="product-price">300 포인트</div>
-                    <button class="exchange-button" onclick="exchange(this, 300)">교환하기</button>
+                    <div class="product-price">400 포인트</div>
+                    <form method="post">
+                        <input type="hidden" name="item_cost" value="400">
+                        <button type="submit" class="exchange-button">교환하기</button>
+                    </form>
                 </div>
             </div>
-
+    
             <div class="product-card">
                 <div class="product-image">
                     <img src="https://www.seoulfn.com/news/photo/202202/447955_216435_2851.jpg" alt="Eco Bag">
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">비건 화장품 2000원 할인권</h3>
-                    <p class="product-description"></p>
                     <div class="product-price">200 포인트</div>
-                    <button class="exchange-button" onclick="exchange(this, 200)">교환하기</button>
+                    <form method="post">
+                        <input type="hidden" name="item_cost" value="200">
+                        <button type="submit" class="exchange-button">교환하기</button>
+                    </form>
                 </div>
             </div>
-
         </div>
     </div>
+    
 
     <div id="successPopup" class="success-popup">교환이 완료되었습니다!</div>
 
-    <script>
-        let userPoints = 500;
-        const pointsElement = document.getElementById('points');
-        const pointsUpdate = document.getElementById('points-update');
-        const successPopup = document.getElementById('successPopup');
+<script>
+    let userPoints = {{ points }};
+    const pointsElement = document.getElementById('points');
+    const pointsUpdate = document.getElementById('points-update');
+    const successPopup = document.getElementById('successPopup');
 
-        function showPopup() {
-            successPopup.classList.add('show');
+    function showPopup() {
+        successPopup.classList.add('show');
+        setTimeout(() => {
+            successPopup.classList.remove('show');
+        }, 3000);
+    }
+
+    function updatePoints(newPoints) {
+        pointsElement.textContent = newPoints;
+        pointsUpdate.style.opacity = '1';
+        setTimeout(() => {
+            pointsUpdate.style.opacity = '0';
+        }, 2000);
+    }
+
+    function exchange(button, cost) {
+        if (userPoints >= cost) {
+            button.classList.add('shake');
             setTimeout(() => {
-                successPopup.classList.remove('show');
-            }, 3000);
-        }
+                button.classList.remove('shake');
+            }, 500);
 
-        function updatePoints(newPoints) {
-            pointsElement.textContent = newPoints;
-            pointsUpdate.style.opacity = '1';
+            userPoints -= cost;
+            updatePoints(userPoints);
+            showPopup();
+
+            // 포인트가 부족한 상품의 버튼 비활성화
+            document.querySelectorAll('.exchange-button').forEach(btn => {
+                const price = parseInt(btn.previousElementSibling.textContent);
+                btn.disabled = userPoints < price;
+            });
+        } else {
+            button.classList.add('shake');
             setTimeout(() => {
-                pointsUpdate.style.opacity = '0';
-            }, 2000);
+                button.classList.remove('shake');
+            }, 500);
         }
+    }
 
-        function exchange(button, cost) {
-            if (userPoints >= cost) {
-                button.classList.add('shake');
-                setTimeout(() => {
-                    button.classList.remove('shake');
-                }, 500);
+    // 초기 버튼 상태 설정
+    document.querySelectorAll('.exchange-button').forEach(btn => {
+        const price = parseInt(btn.previousElementSibling.textContent);
+        btn.disabled = userPoints < price;
+    });
 
-                userPoints -= cost;
-                updatePoints(userPoints);
-                showPopup();
+    function activateNavItem(element) {
+        // 모든 nav-item의 active 클래스를 제거합니다.
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => item.classList.remove('active'));
 
-                // 포인트가 부족한 상품의 버튼 비활성화
-                document.querySelectorAll('.exchange-button').forEach(btn => {
-                    const price = parseInt(btn.previousElementSibling.textContent);
-                    btn.disabled = userPoints < price;
-                });
-            } else {
-                button.classList.add('shake');
-                setTimeout(() => {
-                    button.classList.remove('shake');
-                }, 500);
-            }
-        }
-
-        // 초기 버튼 상태 설정
-        document.querySelectorAll('.exchange-button').forEach(btn => {
-            const price = parseInt(btn.previousElementSibling.textContent);
-            btn.disabled = userPoints < price;
-        });
-    </script>
+        // 현재 클릭한 항목에 active 클래스를 추가합니다.
+        element.classList.add('active');
+    }
+</script>
 </body>
 
 </html>
