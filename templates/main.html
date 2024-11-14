@@ -300,9 +300,8 @@
 
     <div class="nav">
         <div class="nav-content">
-            <a href="#news.html" class="nav-item" onclick="activateNavItem(this)">뉴스</a>
+            <a href="{{ url_for('news') }}" class="nav-item" onclick="activateNavItem(this)">뉴스</a>
             <a href="{{ url_for('main') }}" class="nav-item" onclick="activateNavItem(this)">정책</a>
-            <a href="#" class="nav-item" onclick="activateNavItem(this)">이슈</a>
             <a href="{{ url_for('store') }}" class="nav-item" onclick="activateNavItem(this)">에코 리워드</a>
         </div>
     </div>

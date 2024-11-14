@@ -8,7 +8,7 @@ app.secret_key = 'your_secret_key'  # 세션에 필요한 비밀 키 설정
 db_config = {
     'host': 'localhost',
     'user': 'root',
-    'password': '0111',
+    'password': '1234',
     'database': 'hackathon'
 }
 
@@ -190,6 +190,37 @@ def store():
     # store.html 렌더링 시 username과 points를 전달
     return render_template('store.html', username=session['username'], points=points)
 
+# 뉴스 페이지 라우팅
+@app.route('/news')
+def news():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    try:
+        # 데이터베이스 연결
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor(dictionary=True)
+
+        # 현재 로그인한 사용자의 포인트 조회
+        user_id = session['user_id']
+        cursor.execute("SELECT points FROM users WHERE user_id = %s", (user_id,))
+        user = cursor.fetchone()
+
+        if user:
+            points = user['points']
+        else:
+            points = 0  # 사용자를 찾을 수 없을 경우 기본값 설정
+
+    except mysql.connector.Error as err:
+        print("Error: ", err)
+        return "Database connection error"
+
+    finally:
+        cursor.close()
+        conn.close()
+
+    # news.html 렌더링 시 username과 points를 전달
+    return render_template('news.html', username=session['username'], points=points)
+
 if __name__ == '__main__':
     app.run(debug=True)
-

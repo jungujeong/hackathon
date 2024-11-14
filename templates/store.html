@@ -341,9 +341,8 @@
     </div>
     <div class="nav">
         <div class="nav-content">
-            <a href="#news.html" class="nav-item" onclick="activateNavItem(this)">뉴스</a>
+            <a href="{{ url_for('news') }}" class="nav-item" onclick="activateNavItem(this)">뉴스</a>
             <a href="{{ url_for('main') }}" class="nav-item" onclick="activateNavItem(this)">정책</a>
-            <a href="#" class="nav-item" onclick="activateNavItem(this)">이슈</a>
             <a href="{{ url_for('store') }}" class="nav-item" onclick="activateNavItem(this)">에코 리워드</a>
         </div>
     </div>
@@ -353,7 +352,7 @@
         <div class="products-grid">
             <div class="product-card">
                 <div class="product-image">
-                    <img src="https://imagecdn.dpon.gift/images/merchandises/스타벅스_상풍권3만원권_3.jpg">
+                    <img src="{{ url_for('static', filename='starbucks.jpg') }}" alt="Reusable Bottle">
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">스타벅스 5000원권</h3>
@@ -367,7 +366,7 @@
     
             <div class="product-card">
                 <div class="product-image">
-                    <img src="https://imagecdn.dpon.gift/images/merchandises/스타벅스_상풍권10만원권_3.jpg" alt="Reusable Bottle">
+                    <img src="{{ url_for('static', filename='starbucks.jpg') }}" alt="Reusable Bottle">
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">스타벅스 10000원권</h3>
@@ -381,7 +380,7 @@
     
             <div class="product-card">
                 <div class="product-image">
-                    <img src="https://image.istarbucks.co.kr/upload/store/skuimg/2023/03/[9300000004398]_20230329141438662.jpg">
+                    <img src="{{ url_for('static', filename='bottle.jpg') }}" alt="Reusable Bottle">
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">스타벅스 텀블러</h3>
@@ -395,7 +394,7 @@
     
             <div class="product-card">
                 <div class="product-image">
-                    <img src="https://www.intermarket.co.kr/data/goods/63a6c8b109f7e.jpg">
+                    <img src="{{ url_for('static', filename='ecobag.jpg') }}" alt="Reusable Bottle">
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">리사이클 에코백</h3>
@@ -409,7 +408,7 @@
     
             <div class="product-card">
                 <div class="product-image">
-                    <img src="https://www.seoulfn.com/news/photo/202202/447955_216435_2851.jpg" alt="Eco Bag">
+                    <img src="{{ url_for('static', filename='product.jpg') }}" alt="Reusable Bottle">
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">비건 화장품 2000원 할인권</h3>

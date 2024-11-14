@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 
 <head>
+    <meta charset="UTF-8">
+    <title>Green Vote News</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 
@@ -12,35 +15,7 @@
             background-color: #f9faf5;
         }
 
-        .header {
-            background: linear-gradient(135deg, #2e7d32 0%, #388e3c 50%, #1b5e20 100%);
-            color: white;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            position: relative;
-            overflow: hidden;
-        }
 
-        .header-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo {
-            width: 40px;
-            height: 40px;
-        }
-
-        .site-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 32px;
-            font-weight: 700;
-            margin: 0;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
 
         .nav {
             background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
@@ -68,6 +43,10 @@
 
         .nav-item.active {
             color: #2e7d32;
+        }
+
+        .nav-item:hover {
+            color: #1b5e20;
         }
 
         .container {
@@ -108,24 +87,134 @@
             color: #333;
             line-height: 1.5;
         }
+
+
+
+
+
+
+        .user-info-container {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* 포인트와 사용자 이름 간의 간격 */
+        }
+        
+        .username-container {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: #2e7d32; /* 초록 배경 */
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2e7d32 0%, #388e3c 50%, #1b5e20 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%);
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* 아이템들을 좌우로 정렬 */
+            gap: 15px;
+        }
+        
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+        }
+
+        .site-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .points-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .points-display {
+            font-size: 18px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .points-display::before {
+            content: '🌱';
+            font-size: 24px;
+        }
     </style>
 </head>
 
 <body>
     <div class="header">
         <div class="header-content">
-            <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <!-- SVG content here -->
-            </svg>
-            <h1 class="site-title">Green Vote</h1>
+            <div class="logo-container">
+                <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 투표함 -->
+                    <rect x="35" y="45" width="30" height="35" fill="none" stroke="white" stroke-width="3" rx="4" />
+                    <rect x="42" y="40" width="16" height="8" fill="none" stroke="white" stroke-width="3" />
+    
+                    <!-- 손 -->
+                    <path
+                        d="M75 55 C80 50 83 60 80 65 L75 70 L70 73 L65 75 L60 73 L57 70 C55 67 53 60 57 57 C60 55 63 57 65 60 C67 57 70 55 73 57"
+                        fill="white" />
+    
+                    <!-- 나뭇잎 모양 투표용지 -->
+                    <path d="M25 45 L35 45 
+                       Q30 35 35 25
+                       Q40 35 35 45
+                       L25 45" fill="white" transform="rotate(-15, 30, 35)" />
+                </svg>
+                <h1 class="site-title">Green Vote News</h1>
+            </div>
+            <div class="user-info-container">
+                <div class="points-display">
+                    현재 포인트: {{ points }}
+                </div>
+                <div class="username-container">{{username}}</div>
+            </div>
         </div>
     </div>
 
     <div class="nav">
         <div class="nav-content">
-            <a href="news.html" class="nav-item active">뉴스</a>
-            <a href="policy.html" class="nav-item">정책</a>
-            <a href="rewards.html" class="nav-item">에코 리워드</a>
+            <a href="{{ url_for('news') }}" class="nav-item" onclick="activateNavItem(this)">뉴스</a>
+            <a href="{{ url_for('main') }}" class="nav-item" onclick="activateNavItem(this)">정책</a>
+            <a href="{{ url_for('store') }}" class="nav-item" onclick="activateNavItem(this)">에코 리워드</a>
         </div>
     </div>
 
@@ -154,6 +243,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function activateNavItem(element) {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+
+            element.classList.add('active');
+        }
+    </script>
 </body>
 
 </html>
+
